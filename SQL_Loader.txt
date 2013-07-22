@@ -1,0 +1,29 @@
+3. Use SQL Loader to load the generated text to Oracle since ArcGIS can not convert this text to other formats.
+Firstly, use this sql script to create a table in Oracle.
+CREATE TABLE PWQMN_DATA ( STATION  varchar(255), CHLORIDE int, NITRATES int, PHOSPHORUS int, SUS_SOLIDS int, AVAILABLE int, CHLORIDE_LEN int, CHLORIDE_CONT  varchar2(4000), NITRATES_LEN int, NITRATES_CONT  varchar2(4000), PHOSPHORUS_LEN int, PHOSPHORUS_CONT  varchar2(4000), SUSPENDED_SOLIDS_LEN int, SUSPENDED_SOLIDS_CONT  varchar2(4000));
+
+Then, run sqlldr user/password@sde control=1.ctl, log=1.log, bad=1.bad.
+The 1.ctl contains the following content:
+
+LOAD DATA
+INFILE ’1.txt’
+APPEND INTO TABLE pwqmn_data
+FIELDS TERMINATED BY ‘,’
+TRAILING NULLCOLS
+( STATION CHAR(255) ,
+CHLORIDE,
+NITRATES,
+PHOSPHORUS,
+SUS_SOLIDS,
+AVAILABLE,
+CHLORIDE_LEN,
+CHLORIDE_CONT CHAR(4000) ,
+NITRATES_LEN,
+NITRATES_CONT CHAR(4000) ,
+PHOSPHORUS_LEN,
+PHOSPHORUS_CONT CHAR(4000) ,
+SUSPENDED_SOLIDS_LEN,
+SUSPENDED_SOLIDS_CONT CHAR(4000)
+)
+
+4. Convert the Oracle table to file geodatabase table using ArcGIS.
