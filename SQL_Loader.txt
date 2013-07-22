@@ -27,3 +27,5 @@ SUSPENDED_SOLIDS_CONT CHAR(4000)
 )
 
 4. Convert the Oracle table to file geodatabase table using ArcGIS.
+
+July 22, 2013
